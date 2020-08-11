@@ -1,18 +1,10 @@
-/*
- * ring_buffer.c
- *
- *  Created on: 05 но€б. 2016 г.
- *      Author: Rostik
- */
 #include "ring_buffer.h"
 
-static int _ring_buffer_full(struct ring_buffer *rb)
-{
+static int _ring_buffer_full(struct ring_buffer *rb) {
     return ((rb->head - rb->tail) == rb->n_elem) ? 1 : 0;
 }
 
-static int _ring_buffer_empty(struct ring_buffer *rb)
-{
+static int _ring_buffer_empty(struct ring_buffer *rb) {
     return ((rb->head - rb->tail) == 0U) ? 1 : 0;
 }
 
@@ -37,10 +29,8 @@ int ring_buffer_init(rbd_t *rbd, rb_attr_t *attr)
     return err;
 }
 
-int ring_buffer_put(rbd_t rbd, const void *data)
-{
+int ring_buffer_put(rbd_t rbd, const void *data) {
     int err = 0;
-
     if ((rbd < RING_BUFFER_MAX) && (_ring_buffer_full(&_rb[rbd]) == 0)) {
         const size_t offset = (_rb[rbd].head & (_rb[rbd].n_elem - 1)) * _rb[rbd].s_elem;
         memcpy(&(_rb[rbd].buf[offset]), data, _rb[rbd].s_elem);
@@ -51,9 +41,7 @@ int ring_buffer_put(rbd_t rbd, const void *data)
     return err;
 }
 
-
-int ring_buffer_get(rbd_t rbd, void *data)
-{
+int ring_buffer_get(rbd_t rbd, void *data) {
     int err = 0;
     if ((rbd < RING_BUFFER_MAX) && (_ring_buffer_empty(&_rb[rbd]) == 0)) {
         const size_t offset = (_rb[rbd].tail & (_rb[rbd].n_elem - 1)) * _rb[rbd].s_elem;
@@ -64,5 +52,3 @@ int ring_buffer_get(rbd_t rbd, void *data)
     }
     return err;
 }
-
-

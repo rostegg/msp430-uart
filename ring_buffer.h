@@ -1,10 +1,3 @@
-/*
- * ring_buffer.h
- *
- *  Created on: 05 но€б. 2016 г.
- *      Author: Rostik
- */
-
 #ifndef RING_BUFFER_H_
 #define RING_BUFFER_H_
 
@@ -21,8 +14,7 @@ typedef struct {
 
 typedef unsigned int rbd_t;
 
-struct ring_buffer
-{
+struct ring_buffer {
     size_t s_elem;
     size_t n_elem;
     uint8_t *buf;
